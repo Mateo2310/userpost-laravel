@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: userpost-laravel-app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    environment:
+      DB_CONNECTION: pgsql
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_DATABASE: userpostapidb
+      DB_USERNAME: userpostapi
+      DB_PASSWORD: wP9dX2rL7kF3bQ8hN4mA6cE1jY
+    volumes:
+      - .:/var/www/html
+    networks:
+      - userpost_network
+
+  db:
+    image: postgres:15
+    container_name: userpost-laravel-db
+    environment:
+      POSTGRES_DB: userpostapidb
+      POSTGRES_USER: userpostapi
+      POSTGRES_PASSWORD: wP9dX2rL7kF3bQ8hN4mA6cE1jY
+    ports:
+      - "5433:5432"
+    volumes:
+      - pgdata_userpost:/var/lib/postgresql/data
+    networks:
+      - userpost_network
+
+networks:
+  userpost_network:
+
+volumes:
+  pgdata_userpost:
