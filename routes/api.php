@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\RoleController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -8,15 +10,28 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
     return $request->user();
 });
 
-// Rutas públicas (no requieren autenticación)
-Route::get('/posts', [PostController::class, 'index']); // Listar todos los posts
-Route::get('/posts/{id}', [PostController::class, 'show']); // Ver un post específico
-
 // Rutas protegidas (requieren autenticación)
 Route::middleware(['auth:sanctum'])->group(function () {
+    // Rutas para Posts
     Route::post('/posts', [PostController::class, 'store']); // Crear post
     Route::put('/posts/{id}', [PostController::class, 'update']); // Actualizar post
     Route::delete('/posts/{id}', [PostController::class, 'destroy']); // Eliminar post
+    Route::get('/posts', [PostController::class, 'index']); // Listar todos los posts
+    Route::get('/posts/{id}', [PostController::class, 'show']); // Ver un post específico
+    
+    // Rutas para Users
+    Route::get('/users', [UserController::class, 'index']); // Listar todos los usuarios
+    Route::post('/users', [UserController::class, 'store']); // Crear usuario
+    Route::get('/users/{id}', [UserController::class, 'show']); // Ver un usuario específico
+    Route::put('/users/{id}', [UserController::class, 'update']); // Actualizar usuario
+    Route::delete('/users/{id}', [UserController::class, 'destroy']); // Eliminar usuario
+    
+    // Rutas para Roles
+    Route::get('/roles', [RoleController::class, 'index']); // Listar todos los roles
+    Route::post('/roles', [RoleController::class, 'store']); // Crear rol
+    Route::get('/roles/{id}', [RoleController::class, 'show']); // Ver un rol específico
+    Route::put('/roles/{id}', [RoleController::class, 'update']); // Actualizar rol
+    Route::delete('/roles/{id}', [RoleController::class, 'destroy']); // Eliminar rol
 });
 
 // Ruta simple para demostrar la funcionalidad básica (SIN autenticación)
