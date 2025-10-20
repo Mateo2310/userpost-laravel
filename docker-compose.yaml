@@ -40,7 +40,7 @@ services:
     ports:
       - "5433:5432"
     volumes:
-      - pgdata_userpost:/var/lib/postgresql/data
+      - userpost-laravel_pgdata_userpost:/var/lib/postgresql/data
     networks:
       - userpost_network
 
@@ -48,4 +48,5 @@ networks:
   userpost_network:
 
 volumes:
-  pgdata_userpost:
+  userpost-laravel_pgdata_userpost:
+    external: true
