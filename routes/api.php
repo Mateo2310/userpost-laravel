@@ -8,13 +8,30 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+// Health check y ruta raíz
+Route::get('/', function () {
+    return response()->json([
+        'message' => 'UserPost API',
+        'version' => app()->version(),
+        'status' => 'OK',
+        'timestamp' => now()
+    ]);
+});
+
+Route::get('/up', function () {
+    return response()->json([
+        'message' => 'UserPost API',
+        'version' => app()->version(),
+        'status' => 'OK',
+        'timestamp' => now()
+    ]);
+});
+
 // Rutas de autenticación
 Route::post('/register', [RegisteredUserController::class, 'store'])
-    ->middleware('guest')
     ->name('register');
 
 Route::post('/login', [AuthenticatedSessionController::class, 'store'])
-    ->middleware('guest')
     ->name('login');
 
 Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])

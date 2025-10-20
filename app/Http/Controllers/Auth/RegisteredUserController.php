@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
@@ -31,7 +30,7 @@ class RegisteredUserController extends Controller
             'role_id' => 2, // Asignar rol por defecto
         ]);
 
-        event(new Registered($user));
+        // event(new Registered($user)); // Comentado para evitar problemas de sesión
 
         return response()->json([
             'message' => 'Usuario registrado exitosamente',

@@ -2,11 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
-// Ruta básica de health check
+// Ruta básica para evitar 404 - redirige a API
 Route::get('/', function () {
-    return response()->json([
-        'message' => 'UserPost API',
-        'version' => app()->version(),
-        'status' => 'OK'
-    ]);
+    return redirect('/api');
 });
