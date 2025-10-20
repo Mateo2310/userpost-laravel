@@ -2,8 +2,11 @@
 
 use Illuminate\Support\Facades\Route;
 
+// Ruta básica de health check
 Route::get('/', function () {
-    return ['Laravel' => app()->version()];
+    return response()->json([
+        'message' => 'UserPost API',
+        'version' => app()->version(),
+        'status' => 'OK'
+    ]);
 });
-
-require __DIR__.'/auth.php';

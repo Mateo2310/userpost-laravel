@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('title'); // Título del post
             $table->text('description'); // Descripción del post (texto largo)
             $table->string('imageUrl')->nullable(); // URL de la imagen (opcional)
-            $table->foreignId('users_api_id')->constrained()->onDelete('cascade'); // Clave foránea a users
+            $table->foreignId('user_id')->constrained()->onDelete('cascade'); // Clave foránea a users
             $table->timestamps(); // created_at y updated_at
         });
     }

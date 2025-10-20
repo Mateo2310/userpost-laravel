@@ -11,9 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users_api', function (Blueprint $table) {
+        Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('username')->unique();
+            $table->string('name');
+            $table->string('email')->unique();
             $table->string('password');
             $table->foreignId('role_id')->constrained()->onDelete('cascade');
             $table->timestamps();

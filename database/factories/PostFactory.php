@@ -17,10 +17,10 @@ class PostFactory extends Factory
     public function definition(): array
     {
         return [
-            'title' => $this->faker->sentence(4), // Título aleatorio de 4 palabras
-            'description' => $this->faker->paragraph(3), // Descripción de 3 párrafos
-            'imageUrl' => $this->faker->imageUrl(640, 480, 'posts', true), // URL de imagen falsa
-            'user_id' => \App\Models\User::factory(), // Crea un usuario o usa uno existente
+            'title' => 'Post Title ' . rand(1, 1000),
+            'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+            'imageUrl' => 'https://via.placeholder.com/640x480.png?text=Post+Image',
+            'user_id' => 1, // Se asignará dinámicamente en el seeder
         ];
     }
 }

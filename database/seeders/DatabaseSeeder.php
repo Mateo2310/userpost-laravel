@@ -19,19 +19,24 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        // Crear roles si no existen
         foreach (RoleEnum::cases() as $role) {
-            \App\Models\Role::create(['name' => $role->value]);
+            if (!Role::where('name', $role->value)->exists()) {
+                \App\Models\Role::create(['name' => $role->value]);
+            }
         }
 
-        if (!User::where('username', env('ADMIN_USERNAME', 'admin'))->exists()) {
-        $admin = User::create([
-            'username' => env('ADMIN_USERNAME', 'admin'),
-            'password' => Hash::make(env('ADMIN_PASSWORD', 'admin123')),
-        ]);
-
         $adminRole = Role::where('name', RoleEnum::ADMIN->value)->first();
-        $admin->roles()->attach($adminRole);
-    }
+        
+        if (!User::where('username', env('ADMIN_USERNAME', 'admin'))->exists()) {
+            $admin = User::create([
+                'username' => env('ADMIN_USERNAME', 'admin'),
+                'password' => Hash::make(env('ADMIN_PASSWORD', 'admin123')),
+                'role_id' => $adminRole->id,
+            ]);
+        } else {
+            $admin = User::where('username', env('ADMIN_USERNAME', 'admin'))->first();
+        }
 
         // Crear algunos usuarios de ejemplo y posts
         $users = User::factory(5)->create(); // Crear 5 usuarios aleatorios

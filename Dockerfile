@@ -10,9 +10,21 @@ COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
 WORKDIR /var/www/html
 
+# Copiar composer files primero para mejor caching
+COPY composer.json composer.lock ./
+
+# Instalar dependencias sin scripts de autoload primero
+RUN composer install --no-dev --optimize-autoloader --no-scripts
+
+# Copiar el resto del código
 COPY . .
 
-RUN composer install
+# Ejecutar scripts de autoload ahora que tenemos artisan
+RUN composer dump-autoload --optimize
+
+# Asegurar permisos correctos
+RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
+RUN chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
 
 EXPOSE 8000
 
